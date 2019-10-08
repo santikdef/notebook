@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:form="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Create a note</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="fragments/header.html :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2 class="text-center">Create a note</h2>
+            <form th:action="@{/save}" th:object="${note}" method="post">
+                <div class="form-group">
+                    <textarea class="form-control" id="text" name="text" rows="6"
+                              placeholder="Type a note here"></textarea>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <div class="d-block my-3">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" name="isAnonymous" id="isAnonymous"
+                                   value="true">
+                            <label class="custom-control-label" for="isAnonymous">Anonymously</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

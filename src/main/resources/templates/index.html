@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:form="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Notebook</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+<div th:replace="fragments/header.html :: header"></div>
+<div class="container">
+    <div th:each="note, iter  : ${notes}" th:with="numList=${ {2,1,0} }" th:if="${iter.count % 3 == 0 or iter.last}"
+         class="row">
+        <div th:each="num : ${numList}" th:with="dataIndex=(${iter.index} - ${num})" th:if="${iter.count % 3 == 0}"
+             class="p-2 col-md-4">
+            <div class="card" style="height:200px">
+                <div class="card-body scrolling">
+                    <p th:text="${notes[dataIndex].text}" class="card-text"></p>
+                </div>
+                <div class="card-footer" th:if="${notes[dataIndex].isAnonymous == true}">
+                    <p class="card-text">Anonym</p>
+                </div>
+                <div class="p-2" th:if="${notes[dataIndex].isAnonymous == null}">
+                    <a class="float-right" th:href="${'/delete/' + notes[dataIndex].id}"><img th:src="@{images/trashcan.svg}" width="25" height="25"></a>
+                    <a class="float-right" th:href="${'/edit/' + notes[dataIndex].id}"><img th:src="@{images/pencil.svg}" width="25" height="25"></a>
+                </div>
+            </div>
+        </div>
+        <div th:each="num : ${numList}" th:with="dataIndex=(${iter.index} - ${num})"
+             th:if="${iter.count % 3 != 0} and ${num &lt; iter.count % 3} and ${iter.last}" class="p-2 col-md-4">
+            <div class="card" style="height:200px">
+                <div class="card-body scrolling">
+                    <p th:text="${notes[dataIndex].text}" class="card-text"></p>
+                </div>
+                <div class="card-footer" th:if="${notes[dataIndex].isAnonymous == true}">
+                    <p class="card-text">Anonym</p>
+                </div>
+                <div class="p-2" th:if="${notes[dataIndex].isAnonymous == null}">
+                    <a class="float-right" th:href="${'/delete/' + notes[dataIndex].id}"><img th:src="@{images/trashcan.svg}" width="25" height="25"></a>
+                    <a class="float-right" th:href="${'/edit/' + notes[dataIndex].id}"><img th:src="@{images/pencil.svg}" width="25" height="25"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

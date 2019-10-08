@@ -1,0 +1,19 @@
+<div th:fragment="header"
+     class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h3 class="my-0 mr-md-auto font-weight-normal"><a class="text-dark" href="/">Notebook</a></h3>
+    <br>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="/">Notes</a>
+        <a class="p-2 text-dark" href="/create">Create a new note</a>
+    </nav>
+    <div sec:authorize="isAnonymous()">
+        <a class="mr-3 btn btn-primary" href="/login">Sign in</a>
+        <a class="btn btn-outline-primary" href="/registration">Sign up</a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <span>Hi, </span>
+        <span sec:authentication="name"></span>
+        <span sec:authentication="principal.authorities"></span>
+        <a class="btn btn-outline-primary" href="/logout">Logout</a>
+    </div>
+</div>
